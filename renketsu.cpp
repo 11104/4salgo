@@ -53,7 +53,7 @@ void prints(){
 }
 
 //main
-void swstr(const char *){};
+//void swstr(const char *){};
 
 int main(){
     setlocale(LC_ALL, "ja_JP.UTF-8");
