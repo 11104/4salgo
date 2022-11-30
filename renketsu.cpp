@@ -12,7 +12,7 @@ struct node{
 int numchar(char ch){
     int henkan;
     henkan=ch;
-    return henkan-96;
+        return henkan-96;
 }
 
 //main
