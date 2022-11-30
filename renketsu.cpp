@@ -54,18 +54,18 @@ void prints(){
 static void t_in(const char* tc,const char* tm){
     int clen=strlen(tc);
     int check;
-    tnode point;
-    point=*thead;
+    t_node* point;
+    point=thead;
     for(int i=0;i<clen;i++){
         check=tc[i];
-        if(point.tnext[check]==NULL)break;
-        else point=point.tnext[check];
+        if(point->tnext[check]==NULL)break;
+        else point=point->tnext[check];
     }
     tnode* ttmp;
     ttmp=(tnode*)malloc(sizeof(tnode));
     ttmp->tkey=tc;
     ttmp->tmean=tm;
-    ttmp->tnext=NULL;
+    ttmp->tnext[]=NULL;
 
 }
 
