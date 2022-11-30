@@ -33,9 +33,12 @@ static void s_in(const char* sc/*,string sm*/){
     snode* stmp;
     stmp=(snode*)malloc(sizeof(snode));
     stmp->skey=sc;
+    /*
     string sa;
     std::cin>>sa;
+    
     stmp->smean=sa;
+    */
     stmp->snext=NULL;
     shead=stmp;
 }
