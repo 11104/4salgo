@@ -131,15 +131,35 @@ void printt(){
 
 //main
 void s_first(){
+    s_in("one","ichi");
+    s_in("two","ni");
+    s_in("three","san");
+    s_in("four","yon");
+    s_in("five","go");
+    s_in("six","roku");
+    s_in("seven","nana");
+    s_in("eight","hachi");
+    s_in("nine","kyu");
+    s_in("ten","ju");
     s_in("apple","ringo");
     s_in("pencil","enpitsu");
-    s_in("key","kagi");
 }
-/*
+
 void t_first(){
-    t_in
+    t_in("one","ichi");
+    t_in("two","ni");
+    t_in("three","san");
+    t_in("four","yon");
+    t_in("five","go");
+    t_in("six","roku");
+    t_in("seven","nana");
+    t_in("eight","hachi");
+    t_in("nine","kyu");
+    t_in("ten","ju");
+    t_in("apple","ringo");
+    t_in("pencil","enpitsu");
 }
-*/
+
 
 int main(){
     setlocale(LC_ALL, "ja_JP.UTF-8");
