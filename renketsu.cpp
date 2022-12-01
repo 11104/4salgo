@@ -32,14 +32,33 @@ int numchar(char ch){
     return henkan-97;
 }
 
+//insert check s
+bool stable[677]={};
+int s_incheck(const char* sic){
+    int silen=strlen(sic);
+    int slencount=0;
+    for(int i=0;i<silen;i++){
+        slencount+=numchar(sic[i]);
+    }
+    if(ttable[slencount]==true){
+        //std::cout<<sic<<" has already exist!\n"<<std::endl;
+        return 0;
+    }else{
+        stable[slencount]=true;
+        return 1;
+    }
+}
+
 //insert to s
 static void s_in(const char* sc,const char* sm){
-    snode* stmp;
-    stmp=(snode*)malloc(sizeof(snode));
-    stmp->skey=sc;
-    stmp->smean=sm;
-    stmp->snext=NULL;
-    shead=stmp;
+    if(s_incheck(sc)){
+        snode* stmp;
+        stmp=(snode*)malloc(sizeof(snode));
+        stmp->skey=sc;
+        stmp->smean=sm;
+        stmp->snext=NULL;
+        shead=stmp;
+    }else std::cout<<sc<<" has already exist!\n"<<std::endl;
 }
 
 //print s
@@ -50,28 +69,62 @@ void prints(){
     }
 }
 
+//insert check t
+bool ttable[677]={};
+int t_incheck(const char* tic){
+    int tilen=strlen(tic);
+    int tlencount=0;
+    for(int i=0;i<tilen;i++){
+        tlencount+=numchar(tic[i]);
+    }
+    if(ttable[tlencount]==true){
+        //std::cout<<tic<<" has already exist!\n"<<std::endl;
+        return 0;
+    }else{
+        ttable[tlencount]=true;
+        return 1;
+    }
+}
+
 //insert to t
 static void t_in(const char* tc,const char* tm){
-    int clen=strlen(tc);
-    int check;
-    t_node* point;
-    point=thead;
-    for(int i=0;i<clen;i++){
-        check=tc[i];
-        if(point->tnext[check]==NULL)break;
-        else point=point->tnext[check];
+    if(t_incheck(tc)){//check alrady exit
+        int clen=strlen(tc);
+        int check;
+        t_node* point;
+        point=thead;
+        int lencount=0;
+        for(int i=0;i<clen;i++){
+            check=numchar(tc[i]);
+            lencount++;
+            if(lencount<clen&&point->tnext[check]==NULL){
+                tnode* tntmp;
+               tntmp=(tnode*)malloc(sizeof(tnode));
+               for(int i=0;i<=26;i++){
+                    tntmp->tnext[i]=NULL;
+                }
+                point->tnext[check]=tntmp;
+            }
+            else point=point->tnext[check];
+        }
+        tnode* ttmp;
+        ttmp=(tnode*)malloc(sizeof(tnode));
+        ttmp->tkey=tc;
+        ttmp->tmean=tm;
+        for(int i=0;i<=26;i++){
+        ttmp->tnext[i]=NULL;
+        }
+    }else{
+        std::cout<<tc<<" has already exist!\n"<<std::endl;
     }
-    tnode* ttmp;
-    ttmp=(tnode*)malloc(sizeof(tnode));
-    ttmp->tkey=tc;
-    ttmp->tmean=tm;
-    ttmp->tnext[]=NULL;
-
 }
 
 
 //print t
+void printt(){
+    tnode *ttmp;
 
+}
 
 //void swstr(const char *){};
 
