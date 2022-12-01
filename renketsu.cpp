@@ -33,8 +33,11 @@ int numchar(char ch){
 }
 
 //insert check s
+
+///*
+//insert check s using table
 bool stable[677]={};
-int s_incheck(const char* sic){
+int s_incheckt(const char* sic){
     int silen=strlen(sic);
     int slencount=0;
     for(int i=0;i<silen;i++){
@@ -48,6 +51,7 @@ int s_incheck(const char* sic){
         return 1;
     }
 }
+//*/
 
 //insert to s
 static void s_in(const char* sc,const char* sm){
@@ -69,9 +73,10 @@ void prints(){
     }
 }
 
-//insert check t
+///*
+//insert check t using table
 bool ttable[677]={};
-int t_incheck(const char* tic){
+int t_incheckt(const char* tic){
     int tilen=strlen(tic);
     int tlencount=0;
     for(int i=0;i<tilen;i++){
@@ -85,6 +90,7 @@ int t_incheck(const char* tic){
         return 1;
     }
 }
+//*/
 
 //insert to t
 static void t_in(const char* tc,const char* tm){
@@ -164,8 +170,9 @@ void t_first(){
 int main(){
     setlocale(LC_ALL, "ja_JP.UTF-8");
     s_first();
-
+    t_first();
     prints();
+    printt();
 
     
     return 0;
