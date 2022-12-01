@@ -55,7 +55,7 @@ int s_incheckt(const char* sic){
 
 //insert to s
 static void s_in(const char* sc,const char* sm){
-    if(s_incheck(sc)){
+    if(s_incheckt(sc)){
         snode* stmp;
         stmp=(snode*)malloc(sizeof(snode));
         stmp->skey=sc;
@@ -94,7 +94,7 @@ int t_incheckt(const char* tic){
 
 //insert to t
 static void t_in(const char* tc,const char* tm){
-    if(t_incheck(tc)){//check alrady exit
+    if(t_incheckt(tc)){//check alrady exit
         int clen=strlen(tc);
         int check;
         t_node* point;
