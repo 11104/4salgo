@@ -33,8 +33,24 @@ int numchar(char ch){
 }
 
 //insert check s
+int s_incheck(const char* sic){
+    int silen=strlen(sic);
+    int cmpcount=0;
+    snode* stmp;
+    for(stmp=shead;stmp->snext!=NULL;stmp=stmp->snext){
+        cmpcount++;
+        if(!strcmp(sic,stmp->skey)){
+            std::cout<<"Found! "<<stmp->skey<<" means "<<stmp->smean<<std::endl;
+            std::cout<<"checked "<<cmpcount<<"times."<<std::endl;
+            return 0;
+        }
+    }
+    std::cout<<stmp->skey<<" isn't exist."<<std::endl;
+    std::cout<<"checked "<<cmpcount<<"times."<<std::endl;
+    return 1;
+}
 
-///*
+/*
 //insert check s using table
 bool stable[677]={};
 int s_incheckt(const char* sic){
@@ -51,7 +67,7 @@ int s_incheckt(const char* sic){
         return 1;
     }
 }
-//*/
+*/
 
 //insert to s
 static void s_in(const char* sc,const char* sm){
@@ -62,7 +78,7 @@ static void s_in(const char* sc,const char* sm){
         stmp->smean=sm;
         stmp->snext=NULL;
         shead=stmp;
-    }else std::cout<<sc<<" has already exist!\n"<<std::endl;
+    }//else std::cout<<sc<<" has already exist!\n"<<std::endl;
 }
 
 //print s
@@ -73,7 +89,27 @@ void prints(){
     }
 }
 
-///*
+//search s
+void s_search(const char* ss){
+    s_incheck(ss);
+}
+
+//insert check t
+int t_incheck(const char* tic){
+    int tilen=strlen(tic);
+    int cmpcount=0;
+    tnode* ttmp=thead;
+    for(int i=0;i<tilen;i++){
+        if(ttmp->tnext[numchar(tic[i])]==NULL){
+            std::cout<<tic<<" doesn't exist."<<std::endl;
+            return 1;
+        }else ttmp=ttmp->tnext[numchar(tic[i])];
+    }
+    std::cout<<tic<<" has already exist. It means"<<ttmp->tmean<<std::endl;
+    return 0;
+}
+
+/*
 //insert check t using table
 bool ttable[677]={};
 int t_incheckt(const char* tic){
@@ -90,7 +126,7 @@ int t_incheckt(const char* tic){
         return 1;
     }
 }
-//*/
+*/
 
 //insert to t
 static void t_in(const char* tc,const char* tm){
@@ -131,6 +167,12 @@ void printt(){
     tnode *ttmp;
 
 }
+
+//search t
+void t_search(const char* ts){
+    t_incheck(ts);
+}
+
 
 //void swstr(const char *){};
 
@@ -173,6 +215,12 @@ int main(){
     t_first();
     prints();
     printt();
+    const char* finds1;
+    scanf("%s",&finds1);
+
+    const char* findt1;
+    scanf("%s",&findt1);
+
 
     
     return 0;
