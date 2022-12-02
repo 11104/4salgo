@@ -33,13 +33,23 @@ int numchar(char ch){
 }
 
 //insert check s
+int cmp(const char* c1,const char* c2){
+    int c1len=strlen(c1);
+    int c2len=strlen(c2);
+    if(c1len!=c2len)return 0;
+    for(int i=0;i<c1len;i++){
+        if(c1[i]!=c2[i])return 0;
+    }
+    return 1;
+}
+
 int s_incheck(const char* sic){
     int silen=strlen(sic);
     int cmpcount=0;
     snode* stmp=(snode*)malloc(sizeof(snode));
     for(stmp=shead;stmp->snext!=NULL;stmp=stmp->snext){
         cmpcount++;
-        if(!strcmp(sic,stmp->skey)){
+        if(!cmp(sic,stmp->skey)){
             std::cout<<"Found! "<<stmp->skey<<" means "<<stmp->smean<<std::endl;
             std::cout<<"checked "<<cmpcount<<"times."<<std::endl;
             return 0;
