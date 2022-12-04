@@ -3,12 +3,12 @@
 #include <iostream>
 using namespace std;
 
-typedef struct s_node{
+struct s_node{
     const char* skey;
     const char* smean;
-    struct s_node *snext;
-}snode;
-snode* shead=(snode*)malloc(sizeof(snode));
+    s_node *snext;
+};
+s_node *shead=new s_node;
 
 //convert char to int
 int numchar(char ch){
@@ -30,9 +30,10 @@ int cmp(const char* c1,const char* c2){
 }
 
 int s_incheck(const char* sic){
+    if(sic==NULL)return 1;
     int silen=strlen(sic);
     int cmpcount=0;
-    snode* stmp=(snode*)malloc(sizeof(snode));
+    s_node *stmp=new s_node;
     for(stmp=shead;stmp->snext!=NULL;stmp=stmp->snext){
         cmpcount++;
         if(!cmp(sic,stmp->skey)){
@@ -49,7 +50,7 @@ int s_incheck(const char* sic){
 //insert to s
 static void s_in(const char* sc,const char* sm){
     if(s_incheck(sc)){
-        snode* stmp=(snode*)malloc(sizeof(snode));
+        s_node *stmp=new s_node;
         stmp->skey=sc;
         stmp->smean=sm;
         stmp->snext=NULL;
@@ -58,6 +59,6 @@ static void s_in(const char* sc,const char* sm){
 }
 
 int main(){
-
+    s_in("one","ichi");
     return 0;
 }
