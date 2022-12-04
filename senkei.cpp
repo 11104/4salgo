@@ -6,9 +6,9 @@ using namespace std;
 struct s_node{
     const char* skey;
     const char* smean;
-    s_node *snext;
+    struct s_node *snext;
 };
-s_node *shead=new s_node;
+s_node *shead=NULL;//new s_node;
 
 //convert char to int
 int numchar(char ch){
@@ -30,35 +30,44 @@ int cmp(const char* c1,const char* c2){
 }
 
 int s_incheck(const char* sic){
-    if(sic==NULL)return 1;
+    if(shead==NULL)return 1;
     int silen=strlen(sic);
     int cmpcount=0;
     s_node *stmp=new s_node;
     for(stmp=shead;stmp->snext!=NULL;stmp=stmp->snext){
         cmpcount++;
         if(!cmp(sic,stmp->skey)){
-            std::cout<<"Found! "<<stmp->skey<<" means "<<stmp->smean<<std::endl;
-            std::cout<<"checked "<<cmpcount<<"times."<<std::endl;
+            std::cout<<"Found! "<<stmp->skey<<" mean:"<<stmp->smean<<std::endl;
+            std::cout<<" Passed node:"<<cmpcount<<std::endl;
             return 0;
         }
     }
     std::cout<<stmp->skey<<" isn't exist."<<std::endl;
-    std::cout<<"checked "<<cmpcount<<"times."<<std::endl;
     return 1;
 }
 
 //insert to s
 static void s_in(const char* sc,const char* sm){
-    if(s_incheck(sc)){
-        s_node *stmp=new s_node;
+    int psnode=0;
+    //if(shead!=NULL){
+        s_node *stmp=(s_node*)malloc(sizeof(s_node));
         stmp->skey=sc;
         stmp->smean=sm;
-        stmp->snext=NULL;
+        stmp->snext=shead;
         shead=stmp;
-    }//else std::cout<<sc<<" has already exist!\n"<<std::endl;
+        std::cout<<"Successed! :"<<stmp->skey<<": Passed node:"<<psnode<<std::endl;
+    //}
+}
+
+void prints(){
+    s_node *spr;//=(s_node*)malloc(sizeof(s_node));//new s_node;
+    for(spr=shead;spr->snext!=NULL;spr=spr->snext){
+        std::cout<<spr->skey<<" "<<spr->smean<<std::endl;
+    }
 }
 
 int main(){
     s_in("one","ichi");
+    prints();
     return 0;
 }
