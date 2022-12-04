@@ -8,20 +8,22 @@
 using namespace std;
 
 //typedef snode
-typedef struct s_node{
+struct s_node{
     const char* skey;
     const char* smean;
-    struct s_node *snext;
-}snode;
-snode* shead=(snode*)malloc(sizeof(snode));
+    s_node *snext;
+};
+//snode* shead=(snode*)malloc(sizeof(snode));
+s_node *shead=new s_node;
 
 //typedef tnode
-typedef struct t_node{
+struct t_node{
     const char* tkey;
     const char* tmean;
     struct t_node *tnext[26];
-}tnode;
-tnode* thead=(tnode*)malloc(sizeof(tnode));
+};
+//tnode* thead=(tnode*)malloc(sizeof(tnode));
+t_node *thead=new t_node;
 
 //convert char to int
 int numchar(char ch){
@@ -46,7 +48,7 @@ int cmp(const char* c1,const char* c2){
 int s_incheck(const char* sic){
     int silen=strlen(sic);
     int cmpcount=0;
-    snode* stmp=(snode*)malloc(sizeof(snode));
+    s_node *stmp=new s_node;
     for(stmp=shead;stmp->snext!=NULL;stmp=stmp->snext){
         cmpcount++;
         if(!cmp(sic,stmp->skey)){
@@ -82,7 +84,7 @@ int s_incheckt(const char* sic){
 //insert to s
 static void s_in(const char* sc,const char* sm){
     if(s_incheck(sc)){
-        snode* stmp=(snode*)malloc(sizeof(snode));
+        s_node *stmp=new s_node;
         stmp->skey=sc;
         stmp->smean=sm;
         stmp->snext=NULL;
@@ -92,7 +94,7 @@ static void s_in(const char* sc,const char* sm){
 
 //print s
 void prints(){
-    snode *stmp=(snode*)malloc(sizeof(snode));
+    s_node *stmp=new s_node;
     for(stmp=shead;stmp->snext!=NULL;stmp=stmp->snext){
         std::cout<<stmp->skey<<" "<<stmp->smean<<std::endl;
     }
@@ -107,7 +109,7 @@ void s_search(const char* ss){
 int t_incheck(const char* tic){
     int tilen=strlen(tic);
     int cmpcount=0;
-    tnode* ttmp=(tnode*)malloc(sizeof(tnode));
+    t_node *ttmp=new t_node;
     ttmp=thead;
     for(int i=0;i<tilen;i++){
         if(ttmp->tnext[numchar(tic[i])]==NULL){
@@ -143,14 +145,14 @@ static void t_in(const char* tc,const char* tm){
     if(t_incheck(tc)){//check alrady exit
         int clen=strlen(tc);
         int check;
-        tnode* point=(tnode*)malloc(sizeof(tnode));
+        t_node *point=new t_node;
         point=thead;
         int lencount=0;
         for(int i=0;i<clen;i++){
             check=numchar(tc[i]);
             lencount++;
             if(lencount<clen&&point->tnext[check]==NULL){
-                tnode* tntmp=(tnode*)malloc(sizeof(tnode));
+                t_node *tntmp=new t_node;
                for(int i=0;i<=26;i++){
                     tntmp->tnext[i]=NULL;
                 }
@@ -158,7 +160,7 @@ static void t_in(const char* tc,const char* tm){
             }
             else point=point->tnext[check];
         }
-        tnode* ttmp=(tnode*)malloc(sizeof(tnode));
+        t_node *ttmp=new t_node;
         ttmp->tkey=tc;
         ttmp->tmean=tm;
         for(int i=0;i<=26;i++){
