@@ -30,7 +30,7 @@ int cmp(const char* c1,const char* c2){
 }
 
 int s_incheck(const char* sic){
-    if(sic==NULL)return 1;
+    if(shead==NULL)return 1;
     int silen=strlen(sic);
     int cmpcount=0;
     s_node *stmp=new s_node;
@@ -49,12 +49,14 @@ int s_incheck(const char* sic){
 
 //insert to s
 static void s_in(const char* sc,const char* sm){
+    int psnode=0;
     if(s_incheck(sc)){
         s_node *stmp=new s_node;
         stmp->skey=sc;
         stmp->smean=sm;
         stmp->snext=NULL;
         shead=stmp;
+        std::cout<<"Successed! Passed node:"<<psnode<<std::endl;
     }//else std::cout<<sc<<" has already exist!\n"<<std::endl;
 }
 
