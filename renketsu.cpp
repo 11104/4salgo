@@ -94,7 +94,7 @@ static void s_in(const char* sc,const char* sm){
 
 //print s
 void prints(){
-    s_node *stmp=new s_node;
+    s_node *stmp=(s_node*)malloc(sizeof(s_node));//new s_node;
     for(stmp=shead;stmp->snext!=NULL;stmp=stmp->snext){
         std::cout<<stmp->skey<<" "<<stmp->smean<<std::endl;
     }
