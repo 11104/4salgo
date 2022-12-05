@@ -82,22 +82,6 @@ int s_incheck(const char* sic){
     return 0;
 }
 
-
-//main
-
-//sの中身をprintする。
-void s_print(){
-    s_node *spr;//=(s_node*)malloc(sizeof(s_node));//new s_node;
-    space();
-    std::cout<<"Print s_list"<<std::endl;
-    int spricount=1;
-    for(spr=shead;spr->snext!=NULL;spr=spr->snext){
-        std::cout<<spricount<<" "<<spr->skey<<" "<<spr->smean<<std::endl;
-        spricount++;
-    }
-    space();
-}
-
 //delete from s
 //sから単語を取り除く。
 int s_delete(const char* dels){
@@ -120,8 +104,23 @@ int s_delete(const char* dels){
     std::cout<<dels<<" isn't exist."<<std::endl;
     space();
     return 0;
-
 }
+
+//main
+
+//sの中身をprintする。
+void s_print(){
+    s_node *spr;//=(s_node*)malloc(sizeof(s_node));//new s_node;
+    space();
+    std::cout<<"Print s_list"<<std::endl;
+    int spricount=1;
+    for(spr=shead;spr->snext!=NULL;spr=spr->snext){
+        std::cout<<spricount<<" "<<spr->skey<<" "<<spr->smean<<std::endl;
+        spricount++;
+    }
+    space();
+}
+
 
 void s_set();//資料で行った通りの操作をする
 
