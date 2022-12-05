@@ -29,27 +29,13 @@ int cmp(const char* c1,const char* c2){
     return 1;
 }
 
-int s_incheck(const char* sic){
-    if(shead==NULL)return 1;
-    int silen=strlen(sic);
-    int cmpcount=0;
-    s_node *stmp=new s_node;
-    for(stmp=shead;stmp->snext!=NULL;stmp=stmp->snext){
-        cmpcount++;
-        if(!cmp(sic,stmp->skey)){
-            std::cout<<"Found! "<<stmp->skey<<" mean:"<<stmp->smean<<std::endl;
-            std::cout<<" Passed node:"<<cmpcount<<std::endl;
-            return 0;
-        }
-    }
-    std::cout<<stmp->skey<<" isn't exist."<<std::endl;
-    return 1;
-}
+
 
 //insert to s
+int s_count=0;
 static void s_in(const char* sc,const char* sm){
     int psnode=0;
-    //if(shead!=NULL){
+    //if(s_count!=0){
         s_node *stmp=(s_node*)malloc(sizeof(s_node));
         stmp->skey=sc;
         stmp->smean=sm;
@@ -57,17 +43,60 @@ static void s_in(const char* sc,const char* sm){
         shead=stmp;
         std::cout<<"Successed! :"<<stmp->skey<<": Passed node:"<<psnode<<std::endl;
     //}
+    s_count++;
+}
+
+int s_incheck(const char* sic){
+    if(s_count==0)return 1;
+    int silen=strlen(sic);
+    int cmpcount=0;
+    s_node *sintmp=(s_node*)malloc(sizeof(s_node));
+    for(sintmp=shead;sintmp->snext!=NULL;sintmp=sintmp->snext){
+        /*
+        if(cmpcount==0){
+            sintmp=sintmp->snext;
+            cmpcount++;
+        }else{
+            */
+        cmpcount++;
+        if(cmp(sic,sintmp->skey)){
+            std::cout<<"Found! "<<sic<<" mean:"<<sintmp->smean<<std::endl;
+            std::cout<<" Passed node:"<<cmpcount<<std::endl;
+            return 0;
+        //}
+    }
+    }
+    std::cout<<sintmp->skey<<" isn't exist."<<std::endl;
+    return 1;
+}
+
+void space(){
+    std::cout<<std::endl;
 }
 
 void prints(){
     s_node *spr;//=(s_node*)malloc(sizeof(s_node));//new s_node;
+    space();
+    std::cout<<"Print s_list"<<std::endl;
+    int spricount=1;
     for(spr=shead;spr->snext!=NULL;spr=spr->snext){
-        std::cout<<spr->skey<<" "<<spr->smean<<std::endl;
+        std::cout<<spricount<<" "<<spr->skey<<" "<<spr->smean<<std::endl;
+        spricount++;
     }
+    space();
 }
 
+
+
 int main(){
+    /*!! issue
+    First push can't do correctly
+    */
+    s_in(" "," ");
     s_in("one","ichi");
+    s_in("two","ni");
+    s_in("hello","konichiha");
     prints();
+    s_incheck("one");
     return 0;
 }
