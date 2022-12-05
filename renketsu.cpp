@@ -1,3 +1,4 @@
+//改善案用
 /*これはバグってるから使わないで！*/
 #include <stdio.h>
 #include <string>

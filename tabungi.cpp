@@ -167,7 +167,6 @@ int main(){
     t_in("one","ichi");
     t_in("two","ni");
     t_in("three","san");
-    t_incheck("one");
     t_delete("three");
     /*
     
