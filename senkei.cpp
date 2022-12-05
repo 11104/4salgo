@@ -65,13 +65,13 @@ int cmp(const char* c1,const char* c2){
 //検索ヒットした単語と意味を表示する。
 int s_incheck(const char* sic){
     std::cout<<"Search word:"<<sic<<std::endl;
-    if(s_count==0)return 0;
+    if(s_count==0)return 0;//list underflow
     int silen=strlen(sic);
     int cmpcount=0;
     s_node *sintmp=(s_node*)malloc(sizeof(s_node));
     for(sintmp=shead;sintmp->snext!=NULL;sintmp=sintmp->snext){
         cmpcount++;
-        if(cmp(sic,sintmp->skey)){
+        if(cmp(sic,sintmp->skey)){//cmpが1を返す==単語を発見==if文がtrue==単語とその意味を表示
             std::cout<<"Found! "<<sic<<" mean:"<<sintmp->smean<<" Passed node:"<<cmpcount<<std::endl;
             space();
             return 1;
@@ -101,7 +101,7 @@ void s_print(){
 //delete from s
 //sから単語を取り除く。
 int s_delete(const char* dels){
-    std::cout<<"Delete :"<<dels<<std::endl;
+    std::cout<<"Delete word:"<<dels<<std::endl;
     if(s_count==0){
         std::cout<<dels<<" isn't exist."<<std::endl;
         return 0;
@@ -123,10 +123,13 @@ int s_delete(const char* dels){
 
 }
 
-void s_set();
+void s_set();//資料で行った通りの操作をする
 
 int main(){
-    
+    /*
+    ここで関数を呼び出してs_inやs_incheckを自由に行える。
+    各自で試して、改善案を考えると勉強になる。
+    */
    /* test
     s_in(" "," ");
     s_in("one","ichi");
@@ -144,6 +147,7 @@ int main(){
    return 0;
 }
 
+//data set
 void s_set(){
     std::cout<<"1 s_in"<<std::endl;
     space();

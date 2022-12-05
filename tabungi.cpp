@@ -39,26 +39,39 @@ static void t_in(const char* tc,const char* tm){
     int ptnode=0;
     int tlen=strlen(tc);
     std::cout<<"Add word:"<<tc<<" mean:"<<tm<<std::endl;
-    t_node *ttmp=(t_node*)malloc(sizeof(t_node));
-    ttmp->tkey=tc;
-    ttmp->tmean=tm;
     t_node *ti=(t_node*)malloc(sizeof(t_node));
+    if(t_count==0){
+        t_node *tfi=(t_node*)malloc(sizeof(t_node));
+        thead[numchar(tc[0])]=tfi;
+    }
     ti=thead[numchar(tc[0])];
     int i=0;
+    int flag=0;
     for(i=0;i<tlen-1;i++){
-        if(ti->tnext[numchar(tc[i])]==NULL){
+        if(flag||ti->tnext[numchar(tc[i+1])]==NULL){
             t_node *tnew=(t_node*)malloc(sizeof(t_node));
-            ti->tnext[numchar(tc[i])]=tnew;
-        }else ti=ti->tnext[numchar(tc[i])];
+            ti->tnext[numchar(tc[i+1])]=tnew;
+            ti=ti->tnext[numchar(tc[i+1])];
+            flag=1;
+        }else ti=ti->tnext[numchar(tc[i+1])];
+        ptnode++;
     }
-    ti->tnext[numchar(tc[i])]=ttmp;
+    if(flag||ti->tnext[numchar(tc[i+1])]==NULL){
+        t_node *tadd=(t_node*)malloc(sizeof(t_node));
+        tadd->tkey=tc;
+        tadd->tmean=tm;
+        ti->tnext[numchar(tc[i+1])]=tadd;
+    }else{
+        ti->tnext[numchar(tc[i+1])]->tkey=tc;
+        ti->tnext[numchar(tc[i+1])]->tmean=tm;
+    }
     t_count++;
     //free(ttmp);
     //free(ti);
 }
 
 /*
-//search s
+//search t
 
 //文字列c1とc2を比較。一致していれば1を返す。
 int cmp(const char* c1,const char* c2){
@@ -109,16 +122,16 @@ void s_print(){
 */
 
 /*
-//delete from s
-//sから単語を取り除く。
-int s_delete(const char* dels){
+//delete from d
+//dから単語を取り除く。
+int d_delete(const char* dels){
     std::cout<<"Delete :"<<dels<<std::endl;
-    if(s_count==0){
+    if(d_count==0){
         std::cout<<dels<<" isn't exist."<<std::endl;
         return 0;
     }
     int cmpcount=0;
-    s_node *sdetmp=(s_node*)malloc(sizeof(s_node));
+    d_node *ddetmp=(d_node*)malloc(sizeof(d_node));
     for(sdetmp=shead;sdetmp->snext!=NULL;sdetmp=sdetmp->snext){
         cmpcount++;
         if(cmp(dels,sdetmp->skey)){
@@ -156,12 +169,12 @@ int main(){
     t_incheck("one");
     s_print();
     //*/
-   //s_set();
+   //t_set();
    return 0;
 }
 
 /*
-void s_set(){
+void t_set(){
     std::cout<<"1 t_in"<<std::endl;
     space();
     t_in("","");
@@ -210,13 +223,13 @@ void s_set(){
     space();
 
     std::cout<<"3 s_delete"<<std::endl;
-    s_delete("one");
-    s_delete("five");
-    s_delete("six");
-    s_delete("win");
+    t_delete("one");
+    t_delete("five");
+    t_delete("six");
+    t_delete("win");
     
-    //s_print();//test
+    //t_print();//test
 
-    std::cout<<"senkei hikaku completed!"<<std::endl;
+    std::cout<<"tabungi hikaku completed!"<<std::endl;
 }
 */
