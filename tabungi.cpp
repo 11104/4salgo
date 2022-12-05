@@ -9,12 +9,12 @@ using namespace std;
 
 //typedef s_node
 //s_nodeを定義します。
-struct s_node{
-    const char* skey;//単語
-    const char* smean;//意味
-    struct s_node *snext;//次の単語(s_node)
+struct t_node{
+    const char* tkey;//単語
+    const char* tmean;//意味
+    struct t_node *tnext[26];//次の単語(s_node)
 };
-s_node *shead=NULL;//new s_node;
+t_node *thead[26];//new s_node;
 
 //return line
 //改行します。
@@ -33,22 +33,31 @@ int numchar(char ch){
     return henkan-97;
 }
 
-//insert to s
-int s_count=0;
-static void s_in(const char* sc,const char* sm){
-    int psnode=0;
-    std::cout<<"Add word:"<<sc<<" mean:"<<sm<<std::endl;
-    //if(s_count!=0){
-        s_node *stmp=(s_node*)malloc(sizeof(s_node));
-        stmp->skey=sc;
-        stmp->smean=sm;
-        stmp->snext=shead;
-        shead=stmp;
-        std::cout<<"Successed! :"<<stmp->skey<<": Passed node:"<<psnode<<std::endl;
-    //}
-    s_count++;
+//insert to t
+int t_count=0;
+static void t_in(const char* tc,const char* tm){
+    int ptnode=0;
+    int tlen=strlen(tc);
+    std::cout<<"Add word:"<<tc<<" mean:"<<tm<<std::endl;
+    t_node *ttmp=(t_node*)malloc(sizeof(t_node));
+    ttmp->tkey=tc;
+    ttmp->tmean=tm;
+    t_node *ti=(t_node*)malloc(sizeof(t_node));
+    ti=thead[numchar(tc[0])];
+    int i=0;
+    for(i=0;i<tlen-1;i++){
+        if(ti->tnext[numchar(tc[i])]==NULL){
+            t_node *tnew=(t_node*)malloc(sizeof(t_node));
+            ti->tnext[numchar(tc[i])]=tnew;
+        }else ti=ti->tnext[numchar(tc[i])];
+    }
+    ti->tnext[numchar(tc[i])]=ttmp;
+    t_count++;
+    //free(ttmp);
+    //free(ti);
 }
 
+/*
 //search s
 
 //文字列c1とc2を比較。一致していれば1を返す。
@@ -63,7 +72,7 @@ int cmp(const char* c1,const char* c2){
 }
 
 //検索ヒットした単語と意味を表示する。
-int s_incheck(const char* sic){
+int t_incheck(const char* sic){
     std::cout<<"Search word:"<<sic<<std::endl;
     if(s_count==0)return 0;
     int silen=strlen(sic);
@@ -81,10 +90,10 @@ int s_incheck(const char* sic){
     space();
     return 0;
 }
-
+*/
 
 //main
-
+/*
 //sの中身をprintする。
 void s_print(){
     s_node *spr;//=(s_node*)malloc(sizeof(s_node));//new s_node;
@@ -97,7 +106,9 @@ void s_print(){
     }
     space();
 }
+*/
 
+/*
 //delete from s
 //sから単語を取り除く。
 int s_delete(const char* dels){
@@ -123,73 +134,79 @@ int s_delete(const char* dels){
 
 }
 
+
 void s_set();
+*/
 
 int main(){
-    
-   /* test
-    s_in(" "," ");
-    s_in("one","ichi");
-    s_in("two","ni");
-    s_in("hello","konichiha");
+    for(int j=0;j<26;j++){
+        thead[j]=NULL;
+    }
+   ///* test
+    //t_in(" "," ");
+    t_in("one","ichi");
+    //t_in("two","ni");
+    //t_in("hello","konichiha");
+    /*
     s_print();
     
     s_delete("one");
-    s_incheck("one");
-    s_in("one","ichi");
-    s_incheck("one");
+    t_incheck("one");
+    t_in("one","ichi");
+    t_incheck("one");
     s_print();
-    */
-   s_set();
+    //*/
+   //s_set();
    return 0;
 }
 
+/*
 void s_set(){
-    std::cout<<"1 s_in"<<std::endl;
+    std::cout<<"1 t_in"<<std::endl;
     space();
-    s_in("","");
-    s_in("one","ichi");
-    s_in("two","ni");
+    t_in("","");
+    t_in("one","ichi");
+    t_in("two","ni");
     space();
 
     std::cout<<"data set.."<<std::endl;
-    s_in("three","san");
-    s_in("four","yon");
-    s_in("god","kami");
-    s_in("sky","sora");
-    s_in("seven","nana");
-    s_in("eight","hachi");
-    s_in("nine","kyu");
-    s_in("ten","juu");
-    s_in("eleven","juuichi");
-    s_in("twelve","juuni");
-    s_in("threteen","juusan");
-    s_in("fourteen","juuyo");
-    s_in("five","go");
-    s_in("six","roku");
-    s_in("seventeen","juunana");
-    s_in("eighteen","juuhachi");
-    s_in("nineteen","juukyu");
-    s_in("twenty","nujuu");
-    s_in("twentyone","nijuuichi");
-    s_in("twentytwo","nijuuni");
-    s_in("twentythree","nijuusan");
-    s_in("twentyfour","nijuuyon");
-    s_in("twentyfive","nujuugo");
-    s_in("twentysix","nijuuroku");
-    s_in("twentyseven","nijuunana");
-    s_in("twentyeight","nijuuhachi");
-    s_in("twentynine","nijuukyu");
-    s_in("win","katsu");
+    t_in("three","san");
+    t_in("four","yon");
+    t_in("god","kami");
+    t_in("sky","sora");
+    t_in("seven","nana");
+    t_in("eight","hachi");
+    t_in("nine","kyu");
+    t_in("ten","juu");
+    t_in("eleven","juuichi");
+    t_in("twelve","juuni");
+    t_in("threteen","juusan");
+    t_in("fourteen","juuyo");
+    t_in("five","go");
+    t_in("six","roku");
+    t_in("seventeen","juunana");
+    t_in("eighteen","juuhachi");
+    t_in("nineteen","juukyu");
+    t_in("twenty","nujuu");
+    t_in("twentyone","nijuuichi");
+    t_in("twentytwo","nijuuni");
+    t_in("twentythree","nijuusan");
+    t_in("twentyfour","nijuuyon");
+    t_in("twentyfive","nujuugo");
+    t_in("twentysix","nijuuroku");
+    t_in("twentyseven","nijuunana");
+    t_in("twentyeight","nijuuhachi");
+    t_in("twentynine","nijuukyu");
+    t_in("win","katsu");
     //s_print();//test
     std::cout<<"data set complete."<<std::endl;
     space();
 
-    std::cout<<"2 s_incheck"<<std::endl;
-    s_incheck("one");
-    s_incheck("five");
-    s_incheck("six");
-    s_incheck("win");
+    std::cout<<"2 t_incheck"<<std::endl;
+    t_incheck("one");
+    t_incheck("five");
+    t_incheck("six");
+    t_incheck("win");
     space();
 
     std::cout<<"3 s_delete"<<std::endl;
@@ -202,3 +219,4 @@ void s_set(){
 
     std::cout<<"senkei hikaku completed!"<<std::endl;
 }
+*/
