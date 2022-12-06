@@ -29,7 +29,7 @@ int numchar(char ch){
     henkan=ch;
     //convert uppercase to lowercase
     //大文字を小文字に変換する
-    if('A'<=ch&&ch<='Z')ch+=32;
+    if('A'<=ch&&ch<='Z')henkan+=32;
     return henkan-97;
 }
 

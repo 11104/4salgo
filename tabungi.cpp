@@ -40,9 +40,10 @@ void space(){
 int numchar(char ch){
     int henkan;
     henkan=ch;
+    //std::cout<<henkan-97<<std::endl;//test
     //convert uppercase to lowercase
     //大文字を小文字に変換する
-    if('A'<=ch&&ch<='Z')ch+=32;
+    if('A'<=ch&&ch<='Z')henkan+=32;
     return henkan-97;
 }
 
@@ -56,31 +57,36 @@ static void t_in(const char* tc,const char* tm){
     ti=thead[numchar(tc[0])];
     int i=0;
     int flag=0;
-    for(i=0;i<tlen-1;i++){
-        if(flag||ti->tnext[numchar(tc[i+1])]==NULL){
+    for(i=0;i<tlen-2;i++){
+        int soeji=numchar(tc[i+1]);
+        if(flag||ti->tnext[soeji]==NULL){
+            //std::cout<<"newnode"<<std::endl;//test
             t_node *tnew=(t_node*)malloc(sizeof(t_node));
             tnew->tkey=NULL;
             tnew->tmean=NULL;
             t_set(ti->tnext);
-            ti->tnext[numchar(tc[i+1])]=tnew;
-            ti=ti->tnext[numchar(tc[i+1])];
+            ti->tnext[soeji]=tnew;
+            ti=ti->tnext[soeji];
             flag=1;
-            //std::cout<<"newnode"<<std::endl;//test
         }else{
-            ti=ti->tnext[numchar(tc[i+1])];
             //std::cout<<"already"<<std::endl;//test
+            ti=ti->tnext[soeji];
         }
         ptnode++;
     }
-    if(flag||ti->tnext[numchar(tc[i+1])]==NULL){
+    ptnode++;
+    int lsoeji=numchar(tc[tlen-1]);
+    if(flag||ti->tnext[lsoeji]==NULL){
+        //std::cout<<"newnode last"<<std::endl;//test
         t_node *tadd=(t_node*)malloc(sizeof(t_node));
         tadd->tkey=tc;
         tadd->tmean=tm;
-        ti->tnext[numchar(tc[i+1])]=tadd;
+        ti->tnext[lsoeji]=tadd;
         t_set(ti->tnext);
     }else{
-        ti->tnext[numchar(tc[i+1])]->tkey=tc;
-        ti->tnext[numchar(tc[i+1])]->tmean=tm;
+        //std::cout<<"already Last"<<std::endl;//test
+        ti->tnext[lsoeji]->tkey=tc;
+        ti->tnext[lsoeji]->tmean=tm;
     }
     t_count++;
     std::cout<<"Successed! Passed node:"<<ptnode<<std::endl;
@@ -98,25 +104,30 @@ int t_incheck(const char* tic){
     t_node *tintmp=(t_node*)malloc(sizeof(t_node));
     tintmp=thead[numchar(tic[0])];
     int i=0;
-    for(i=0;i<tilen-1;i++){
-        if(tintmp->tnext[numchar(tic[i+1])]==NULL){
+    for(i=0;i<tilen-2;i++){
+        int soeji=numchar(tic[i+1]);
+        if(tintmp->tnext[soeji]==NULL){
             std::cout<<tic<<" isn't exist."<<std::endl;
             space();
             return 0;
         }
-        tintmp=tintmp->tnext[numchar(tic[i+1])];
+        tintmp=tintmp->tnext[soeji];
         cmpcount++;
         //std::cout<<"Next"<<std::endl;//test
     }
-    if(tintmp->tmean==NULL){
+    cmpcount++;
+    int lsoeji=numchar(tic[tilen-1]);
+    /*
+    if(tintmp->tnext[lsoeji]->tmean==NULL){
         std::cout<<tic<<" isn't exist."<<std::endl;
         space();
         return 0;
     }else{
-        std::cout<<"Found! "<<tic<</*" mean:"<<tintmp->tmean<<*/" Passed node:"<<cmpcount<<std::endl;
+        */
+        std::cout<<"Found! "/*<<tic<<" mean:"<<tintmp->tmean*/<<" Passed node:"<<cmpcount<<std::endl;
         space();
         return 1;
-    }
+    //}
 
 }
 
@@ -133,7 +144,7 @@ int t_delete(const char* delt){
     t_node *tdetmp=(t_node*)malloc(sizeof(t_node));
     tdetmp=thead[numchar(delt[0])];
     int i=0;
-    for(i=0;i<deltlen-1;i++){
+    for(i=0;i<deltlen-2;i++){
         cmpcount++;
         if(tdetmp->tnext[numchar(delt[i+1])]==NULL){
             std::cout<<delt<<" isn't exist."<<std::endl;
@@ -143,8 +154,9 @@ int t_delete(const char* delt){
         }
         tdetmp=tdetmp->tnext[numchar(delt[i+1])];
     }
-    tdetmp->tnext[numchar(delt[i+1])]->tkey=NULL;
-    tdetmp->tnext[numchar(delt[i+1])]->tmean=NULL;             
+    cmpcount++;
+    tdetmp->tnext[numchar(delt[deltlen-1])]->tkey=NULL;
+    tdetmp->tnext[numchar(delt[deltlen-1])]->tmean=NULL;             
     std::cout<<"Deleted. Passed node:"<<cmpcount<<std::endl;
     space();
     return 1;
@@ -163,19 +175,22 @@ void t_first();
 
 int main(){
     t_set(thead);//theadの初期設定
-   ///* test
+   /* test
+   
     t_in("one","ichi");
     t_in("two","ni");
+    t_incheck("two");
     t_in("three","san");
     t_delete("three");
-    /*
+    t_incheck("three");
+    
     
     
     t_incheck("one");
     t_in("one","ichi");
     t_incheck("one");
     //*/
-   //t_first();
+   t_first();
    return 0;
 }
 
